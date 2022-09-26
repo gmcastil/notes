@@ -107,3 +107,40 @@ bit string literals in VHDL versions after VHDL-2002.
 This is relatively useful summary of the rules of EBNF required to understand
 (hopefully) the rest of the text.
 
+# Chapter 2
+
+Four types of objects:
+- Constants
+- Variables
+- Signals
+- Files
+
+Note that constants and varialbes are the only objects that can store data for
+use in a model.  These kinds of distinctions were not always clear to me.  The
+text saves signals for chapter 5 and files for much later.
+
+## Constants and Variables
+
+Constants differ from literals in that they actually have a type associated with
+them, which is helpful.  Variables cannot be accessible by more than one
+process, which is somewhat unclear if variables can be read by more than one
+process.  Probably, what is meant is that they cannot be assigned to by more
+than one process.
+
+Distinction between signal and variable assignment.  A variable assigment
+(:=) immediately alters the value of the variable and replaces it with the new
+value.  A signal assignment (<=) schedules the assignment to be made at some
+later time.
+
+My understanding thus far is that this construct in VHDL
+```vhdl
+  variable foo : integer;
+  foo := 16x"1234";
+```
+is syntactically the same as this one in Verilog
+```verilog
+  integer foo;
+  assign foo = 16'h1234;
+```
+These don't seem too bad, although it's unclear how initialization works when it
+comes to synthesis.
