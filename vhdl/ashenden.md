@@ -13,7 +13,7 @@ entity fdre is
   port ( d   : in  bit;
          clk : in  bit;
          q   : out bit );
-end fdre
+end fdre;
 
 architecture basic of fdre is
 
