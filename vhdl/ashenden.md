@@ -16,12 +16,14 @@ entity fdre is
 end fdre
 
 architecture basic of fdre is
+
 begin
   fdre_basic : process is
   begin
     wait until clk;
     q  <= d after 2 ns;
   end process fdre_basic;
+
 end architecture basic;
 
 ```
