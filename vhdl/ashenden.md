@@ -8,7 +8,7 @@ implementation.  There may be a number of a different architecture bodies of the
 one interface to an entity, which correspond to alternative implementations
 which have the same function.
 
-```
+```vhdl
 entity fdre is
   port ( d   : in  bit;
          clk : in  bit;
