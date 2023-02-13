@@ -32,4 +32,20 @@ Note that these commands are run from the host (e.g., PowerShell on Windows).
 For more information, see [this section](https://www.virtualbox.org/manual/ch09.html#changenat) of the VirtualBox documentation.  Also, this is an example of features exposed by the VirtualBox virtualization engine that are not available in the GUI.
 
 
-
+# Debugging
+A common occurrence after upgrading the VirtualBox host application is that some
+VMs will be inaccessible due to mismatches between the UUID of the inserted
+Guest Additions medium.  This results in an error of the sort like
+```
+Cannot register the DVD image
+'/Applications/VirtualBox.app/Contents/MacOS/VBoxGuestAdditions.iso'
+<UUID> because a CD/DVD image
+'/Applications/VirtualBox.app/Contents/MacOS/VBoxGuestAdditions.iso'
+with UUID <UUID> already exists.
+```
+This question gets asked a lot on the internet and the oft supplied suggestion
+is to open the XML file for the virtual machine and start hacking on it.  The
+more appropriate way is to use the Media Manager to remove and release the
+image.  This will render the VM accessible again.  There is no doubt a better
+way to do this using the `vboxmanage` tools, but I haven't had a chance to
+figure that out yet.
