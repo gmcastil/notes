@@ -17,3 +17,19 @@ This may be left behind if SDK crashes or if the VM that it is in is reset
 improperly.  It appears that deleting this file fixes the problem, but I haven't
 extensively tested it yet.
 
+# Vivado
+## 2022.1
+Even with board files installed in the proper location, Vivado may be unwilling
+to allow a user to select the desired board when creating a new project (the
+'Next' button is greyed out) and progress beyond the 'Default Part' selection
+menu.  The individual board still needs to be selected in the GUI and the
+'Download' button clicked to install part specifics from the XHUB board store.
+The following Tcl command
+```tcl
+xhub::install [xhub::get_xitems digilentinc.com:xilinx_board_store:arty-z7-20:1.1]
+```
+gets run behind the scenes and satisfies whatever it is that the tool seems to
+be missing.  Depending upon board files is truly nuts, but with the
+proliferation of MPSoC boards out there, it's not going to get better anytime
+soon.
+
