@@ -1,9 +1,9 @@
-Installing
-----------
+# Installing
 Installing the starter version of ModelSim from Mentor Graphics is relatively
 painful, if you are on anything resembling a modern platform (i.e., 64-bit).
 That said, it isn't difficult once you understand what needs to be done.
 
+## 32-bit Libraries
 Before we get started, assume that the `vsim` executable is in someplace like
 `/opt/intelFPGA/16.1/modelsim_ase/bin/vsim` and note that all the ModelSim tools
 in that directory are essentially just symlinks to the `vco` script which is in
@@ -171,6 +171,22 @@ installed by running something like this:
 $ LD_LIBRARY_PATH=/opt/intelFPGA/16.1/modelsim_ase/lib32 MTI_VCO_MODE=32 /opt/intelFPGA/16.1/modelsim_ase/bin/vsim 
 ```
 You should see a message like *Reading pref.tcl* and a GUI window should pop up
-with a welcome message.  Unless
+with a welcome message. More importantly, other commands like `vlog` and `vcom`
+should also work from the command line.  So long Vivado and your garbage
+simulator!
+
+## Optional
+Most users, particularly hardware folks, have no clue what the `LD_LIBRARY_PATH`
+environment variable does, how executables are linked, or really even how shells
+work.  Unless you want to have to manually control these yourself, one can hack
+the `vco` script to export the `LD_LIBRARY_PATH` environment variable to include
+the `lib32` directory that we created as well.  To do this, add something like
+```bash
+export LD_LIBRARY_PATH=/opt/intelFPGA/16.1/modelsim_ase/lib32:${LD_LIBRARY_PATH}
+```
+to the `vco` script somewhere that it will get run.  I've had enough problems
+with ECAD tools that I tend to invoke them from special scripts that launch
+subshells with well-defined environment variables and sanely defined values for
+important things like `PATH` and `LD_LIBRARY_PATH`.
 
 
