@@ -12,7 +12,7 @@ directory as the ModelSim root from now on).  Further, note that the `vco`
 script is itself just making calls into one of several other places.  More on
 that later - having just installed the tool, the central problem is the
 following:
-```bash
+```console
 $ /opt/intelFPGA/16.1/modelsim_ase/bin/vsim 
 Error: cannot find "/opt/intelFPGA/16.1/modelsim_ase/bin/../linux_rh60/vsim"
 ```
@@ -36,7 +36,7 @@ The first thing to do is to add support for 32-bit libraries (this is all
 assuming i386 and x86-64 - if you're on something else, then you're on your
 own).
 
-```bash
+```console
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo dpkg --add-architecture i386
@@ -76,7 +76,7 @@ need of service here is the `vish` binary, which is at something like
 `/opt/intelFPGA/16.1/modelsim_ase/linuxaloem/vish`.  Note the following output
 from the dynamic linker:
 
-```bash
+```console
 $ ldd $(find . -type f -iname 'vish')
 	linux-gate.so.1 (0xf7f56000)
 	libpthread.so.0 => /lib/i386-linux-gnu/libpthread.so.0 (0xf7f15000)
@@ -111,7 +111,7 @@ some RedHat related symlinks exist for kernel versions past 3.x and that is most
 definitely not us.  There is another reference to the `linux_rh60` string
 elsewhere, but for now we're going to tell the `vco` script to run the version
 in the `linux` directory and hope for the best.
-```bash
+```console
 $ sudo cp -v /opt/intelFPGA/16.1/modelsim_ase/vco \
 		/opt/intelFPGA/16.1/modelsim_ase/vco.original
 $ sudo sed -i 's/linux_rh60/linux/g' /opt/intelFPGA/16.1/modelsim/vco
@@ -124,7 +124,7 @@ $ diff /opt/intelFPGA/16.1/modelsim_ase/vco /opt/intelFPGA/16.1/modelsim_ase/vco
 If your diff doesn't look like this, you've probably done something wrong.
 
 Now when we run it, we get the following:
-```bash
+```console
 $ MTI_VCO_MODE=32 /opt/intelFPGA/16.1/modelsim_ase/bin/vsim
 Error in startup script: 
 Initialization problem, exiting.
@@ -144,7 +144,7 @@ internet has spoken and concluded that the lingering problem is that a different
 flavor of [Freetype](https://sourceforge.net/projects/freetype/files/freetype2/2.4.12/)
 library needs to be built and installed.
 
-```bash
+```console
 $ wget https://sourceforge.net/projects/freetype/files/freetype2/2.4.12/freetype-2.4.12.tar.bz2
 $ tar -xvjf freetype-2.4.12.tar.bz2
 $ cd freetype-2.4.12
@@ -153,12 +153,12 @@ $ make clean
 $ make
 ```
 Assuming that all worked, create a `lib32` directory in the ModelSim root
-```bash
+```console
 $ sudo mkdir -v /opt/intelFPGA/16.1/modelsim_ase/lib32
 ```
 And then from the Freetype source tree, install the newly created libraries into
 that location
-```bash
+```console
 $ sudo cp -v objs/.libs/libfreetype.so* /opt/intelFPGA/16.1/modelsim_ase/lib32/
 'objs/.libs/libfreetype.so' -> '/opt/intelFPGA/16.1/modelsim_ase/lib32/libfreetype.so'
 'objs/.libs/libfreetype.so.6' -> '/opt/intelFPGA/16.1/modelsim_ase/lib32/libfreetype.so.6'
@@ -167,7 +167,7 @@ $ sudo cp -v objs/.libs/libfreetype.so* /opt/intelFPGA/16.1/modelsim_ase/lib32/
 This creates the necessary library, but doesn't let the tool find them at
 runtime.  Before continuing, we can check to make sure that everything is
 installed by running something like this:
-```bash
+```console
 $ LD_LIBRARY_PATH=/opt/intelFPGA/16.1/modelsim_ase/lib32 MTI_VCO_MODE=32 /opt/intelFPGA/16.1/modelsim_ase/bin/vsim 
 ```
 You should see a message like *Reading pref.tcl* and a GUI window should pop up
