@@ -1,6 +1,51 @@
 # Xilinx
 That's right, the Xilinx tools get an entire page all to themselves
 
+# Installation
+Installation is generally a pain because there does not seem to much recourse if
+the installation hangs for any reasons.  Network outages, low bandwidth, VPN
+issues, etc. can all cause the installer to hang and if it does, you generally
+need to restart again.
+
+I seem to have been doing this a lot lately, so we will go through the steps for
+manually installing via SSH here. These steps are taken directly from the Vivado
+Release Notes (UG973).
+
+First, extract the installer (the web installer works). For this example, we'll
+be using the 2019.1 
+
+```bash
+$ ./Xilinx_Vivado_SDK_Web_2019.1_0524_1430_Lin64.bin --keep --noexec --target unpacked
+Creating directory unpacked/
+Verifying archive integrity... All good.
+Uncompressing Xilinx Installer........................
+```
+That directory should contain the `xsetup` script that installs the bloated
+corpus that is the Vivado Design Suite. First, the installer
+```bash
+$ sudo xsetup -b ConfigGen
+```
+Select Vivado HL Design Edition from the text menu. This should generate a
+configuration file in the root user home directory (usually someplace like
+`/root/.Xilinx/install_config.txt`) which can be edited to determine
+installation options, notably the installation directory which defaults to
+something that virtually no one with any sense would want to use.  Change that
+and then run the installation script again with these options
+```bash
+$ sudo ./xsetup --agree XilinxEULA,3rdPartyEULA,WebTalkTerms --batch Install --config /root/.Xilinx/install_config.txt
+```
+As with all things Xilinx, it varies from version to version of the tool, so
+your mileage might vary - the licensing agreements provided as command line
+arguments during the installation are known to change from version of the tool
+to version.  At any rate, the installation should kick off using the arguments
+provided in the installation configuration file.  Note the location of the log
+file (again, usually someplace silly like `/root/.Xilinx/xinstall/xinstall_<timstamp>.log`).
+
+If all goes according to plan, you should find the Vivado tools installed in
+their respective location. If you're doing this via SSH, I highly recommend
+backgrounding the process and then tailing the log file from a different
+terminal.
+
 # SDK
 ## 2019.1
 Back when the land was green and things sort of made sense.  When trying to load
