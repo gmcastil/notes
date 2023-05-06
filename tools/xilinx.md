@@ -127,3 +127,9 @@ be missing.  Depending upon board files is truly nuts, but with the
 proliferation of MPSoC boards out there, it's not going to get better anytime
 soon.
 
+On some platforms, Vivado will give an error about `application-specific initialization failed: couldn't load file "librdi_commontasks.so": libtinfo.so.5: cannot open shared object file: No such file or directory` which is due to a missing library that doesn't get installed.  So to install it
+```bash
+$ sudo apt-get install libtinfo-dev libtinfo5
+```
+
+
