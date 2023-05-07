@@ -50,7 +50,7 @@ $ sudo apt install \
 	lib32stdc++6 \
 	lib32gcc-s1 \
 	libxt6:i386 \
-	libxtst6:i386
+	libxtst6:i386 \
 	expat:i386 \
      	fontconfig:i386 \
 	libfreetype6:i386 \
@@ -60,7 +60,7 @@ $ sudo apt install \
 	libcanberra0:i386 \
 	libice6:i386 \
 	libsm6:i386     \
-	libncurses5:i386
+	libncurses5:i386 \
 	zlib1g:i386 \
 	libx11-6:i386 \
 	libxau6:i386     \
@@ -105,6 +105,34 @@ $ ldd $(find . -type f -iname 'vish')
 	libbrotlicommon.so.1 => /lib/i386-linux-gnu/libbrotlicommon.so.1 (0xf780a000)
 	libmd.so.0 => /lib/i386-linux-gnu/libmd.so.0 (0xf77fb000)
 ```
+Aside (and I should really make this cleaner) but I needed to install all of
+this to get the actual `vish` executable to not crash at runtime:
+```console
+$ sudo apt-get install \
+	build-essential \
+	gcc-multilib \
+	g++-multilib \
+	lib32stdc++6 \
+	expat:i386 \
+	fontconfig:i386 \
+	libfreetype6:i386 \
+	libexpat1:i386 \
+	libgtk-3-0:i386 \
+	libcanberra0:i386 \
+	libice6:i386 \
+	libsm6:i386 \
+	zlib1g:i386 \
+	libx11-6:i386 \
+	libxau6:i386 \
+	libxdmcp6:i386 \
+	libxext6:i386 \
+	libxft2:i386 \
+	libxrender1:i386 \
+	libxt6:i386 \
+	libxtst6:i386
+```
+And I also had to install the 32-bit `ncurses5` package as well (on Debian 11).
+
 This deals with the 32-bit library problem.  Now let's solve the issue that is
 generating that error message.  It's caused by the fact that the script assumes
 some RedHat related symlinks exist for kernel versions past 3.x and that is most
