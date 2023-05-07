@@ -132,6 +132,10 @@ $ sudo apt-get install \
 	libxtst6:i386
 ```
 And I also had to install the 32-bit `ncurses5` package as well (on Debian 11).
+Also, credit where credit is due,
+[this](https://github.com/sumezawa/modelsim_on_linux) was helpful in figuring out which
+dependancies needed to be satisfied on Debian (different version, so some
+changes needed to be made).
 
 This deals with the 32-bit library problem.  Now let's solve the issue that is
 generating that error message.  It's caused by the fact that the script assumes
