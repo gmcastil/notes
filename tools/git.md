@@ -16,4 +16,10 @@ $ git -dfx          # whole smash, get rid of everything
 # If you want to do a dry run first before murdering everything
 $ git -dfx --dry-run
 ```
-
+This is pretty awesome
+https://stackoverflow.com/questions/23227927/how-do-i-move-master-back-several-commits-in-git
+```bash
+$ git log --graph --abbrev-commit \
+	--decorate \
+	--format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+```
